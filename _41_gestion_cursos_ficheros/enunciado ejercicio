@@ -1,0 +1,23 @@
+1.- Añadir curso
+2.- Buscar curso
+3.- Duración media de cursos
+4.- Cursos por temática
+5.- Eliminar cursos por precio
+6.- Salir
+
+Un curso se caracteriza por nombre, duracion, precio y temática.
+
+Opción 1: se solicitan los datos del curso y se añade (opcional, no debería permitir cursos con el mismo nombre)
+Opción 2: Se pide el nombre del curso y se muestran todos los datos del mismo
+Opción 3: Muestra la duración media de todos los cursos registrados
+Opción 4: Se pìde una temática y se muestran  datos de todos los cursos que tengan esa temática
+Opción 5: Se pide un precio y se eliminarán todos los cursos cuyo precio sea igual o superior a dicho valor
+
+usar hashmap
+
+
+Al eliminar una linea de un fichero, he tenido que leer el fichero entero guardandolo, excepto la linea(s) que no quiero, y despues , 
+hacer una primera apertura de fichero sobreescribiendo..., y luego ya en un for each para el array , ir añadiendo linea a linea al fichero
+
+Me he encontrado también con problemas a la hora de crear un nuevo curso, porque va a buscar si el curso ya existe.., pero si es el primer curso,
+el fichero aun no existe, y da excepcion. He tenido que capturarla creando el fichero en ese momento
