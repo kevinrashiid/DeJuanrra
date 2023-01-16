@@ -136,101 +136,101 @@ public class CursosService {
 	
 	public int  eliminarCurso(int precio) {
 		int eliminados = 0;
-		
-		
-		
+
+
+
 		// Me llevo a un arraylist de cursos los que son menores que el precio dado
-		 ArrayList<Curso> res = new ArrayList<>();
-		 	
-			try (FileReader    fr =new FileReader(dir);
+		ArrayList<Curso> res = new ArrayList<>();
+
+		try (FileReader    fr =new FileReader(dir);
 				BufferedReader bf= new BufferedReader(fr);){
-						
-				String fila;  
-				while ((fila= bf.readLine())!=null) {
-					String[] linea=fila.split("[|]");  
-					Curso c =new Curso(linea[0],Integer.parseInt(linea[1]),Double.parseDouble(linea[2]),linea[3]);
-					
-					if (c.getPrecio() < precio) {
-						res.add(c);
-					}
-					else {
-						eliminados++;
-					}
+
+			String fila;  
+			while ((fila= bf.readLine())!=null) {
+				String[] linea=fila.split("[|]");  
+				Curso c =new Curso(linea[0],Integer.parseInt(linea[1]),Double.parseDouble(linea[2]),linea[3]);
+
+				if (c.getPrecio() < precio) {
+					res.add(c);
+				}
+				else {
+					eliminados++;
 				}
 			}
+		}
+		catch (FileNotFoundException ex) {
+			ex.printStackTrace();
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		//  Creo de nuevo el fichero con los cursos del arraylist 
+		//  en los que ya se han eliminado los de precio superior al limite
+
+
+
+		try {    // empiezo a escribir sobreescribiendo  , es una forma de crear de cero el fichero
+			FileOutputStream fosi = new FileOutputStream (dir, false);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
+
+
+		for (Curso c: res) { 
+
+			String datos=c.getNombre()+"|"+c.getDuracion()+"|"+c.getPrecio()+"|"+c.getTematica();
+			try (FileOutputStream fos = new FileOutputStream (dir, true);  //pero cuando escribo de verdad, añado datos
+					PrintStream out= new PrintStream (fos);) {
+				out.println(datos);
+
+			}
 			catch (FileNotFoundException ex) {
-					ex.printStackTrace();
+				ex.printStackTrace();
 			}
-			catch (IOException ex) {
-					ex.printStackTrace();
+			catch(IOException ex) {
+				ex.printStackTrace();
 			}
-			
-			//  Creo de nuevo el fichero con los cursos del arraylist 
-			//  en los que ya se han eliminado los de precio superior al limite
-			
-			 
-			
-			try {    // empiezo a escribir sobreescribiendo  , es una forma de crear de cero el fichero
-				FileOutputStream fosi = new FileOutputStream (dir, false);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-		    
-			
-			
-			for (Curso c: res) { 
-				
-		    	String datos=c.getNombre()+"|"+c.getDuracion()+"|"+c.getPrecio()+"|"+c.getTematica();
-				try (FileOutputStream fos = new FileOutputStream (dir, true);  //pero cuando escribo de verdad, añado datos
-					 PrintStream out= new PrintStream (fos);) {
-					out.println(datos);
-						
-					}
-					catch (FileNotFoundException ex) {
-						ex.printStackTrace();
-					}
-					catch(IOException ex) {
-						ex.printStackTrace();
-					}
-		    }
-		
-			return eliminados;
+		}
+
+		return eliminados;
 	}
 	/*
 	public void  eliminarCurso(double precio) {
-		
+
 		for (Curso c: curso) {
 			if (c.getPrecio() > precio) {
 				curso.remove(c);
-				
+
 			}
 		}
 	}
-	*/
-	
+	 */
+
 	public ArrayList<Curso>  mostrarTodos () {
-		 ArrayList<Curso> res = new ArrayList<>();
-		 	
-	try (FileReader    fr =new FileReader(dir);
-			BufferedReader bf= new BufferedReader(fr);){
-				
-		String fila;  
-		while ((fila= bf.readLine())!=null) {
-			String[] linea=fila.split("[|]");  
-			Curso c =new Curso(linea[0],Integer.parseInt(linea[1]),Double.parseDouble(linea[2]),linea[3]);
-			res.add(c);
-	
+		ArrayList<Curso> res = new ArrayList<>();
+
+		try (FileReader    fr =new FileReader(dir);
+				BufferedReader bf= new BufferedReader(fr);){
+
+			String fila;  
+			while ((fila= bf.readLine())!=null) {
+				String[] linea=fila.split("[|]");  
+				Curso c =new Curso(linea[0],Integer.parseInt(linea[1]),Double.parseDouble(linea[2]),linea[3]);
+				res.add(c);
+
+			}
 		}
-	}
-	catch (FileNotFoundException ex) {
+		catch (FileNotFoundException ex) {
 			ex.printStackTrace();
-	}
-	catch (IOException ex) {
-			ex.printStackTrace();
-	}
-	return res;
-	
-	
 		}
+		catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return res;
+
+
+	}
 }
